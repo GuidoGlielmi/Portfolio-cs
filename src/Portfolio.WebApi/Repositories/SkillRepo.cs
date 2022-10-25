@@ -8,18 +8,18 @@ namespace Portfolio.WebApi.Repositories;
 
 public class SkillRepo : IService<Skill, SkillSearcheable>
 {
-  public PortfolioContext Context { get; }
+  private readonly PortfolioContext _context;
 
   public SkillRepo(PortfolioContext context)
   {
-    Context = context;
+    _context = context;
   }
 
   public async Task<IEnumerable<Skill>> GetAll()
   {
     try
     {
-      return await Context.Skills.ToListAsync();
+      return await _context.Skills.ToListAsync();
     } catch (Exception)
     {
       throw new RequestException(500);
@@ -46,7 +46,7 @@ public class SkillRepo : IService<Skill, SkillSearcheable>
 
   public async Task<Skill> GetById(Guid id)
   {
-    Skill foundSkill = await Context.Skills.FindAsync(id);
+    Skill foundSkill = await _context.Skills.FindAsync(id);
     return foundSkill ?? throw new RequestException(404);
   }
 
@@ -54,8 +54,8 @@ public class SkillRepo : IService<Skill, SkillSearcheable>
   {
     try
     {
-      Context.Skills.Add(skill);
-      await Context.SaveChangesAsync();
+      _context.Skills.Add(skill);
+      await _context.SaveChangesAsync();
     } catch (Exception)
     {
       throw new RequestException(500);
@@ -66,8 +66,8 @@ public class SkillRepo : IService<Skill, SkillSearcheable>
   {
     try
     {
-      Context.Skills.Remove(skill);
-      await Context.SaveChangesAsync();
+      _context.Skills.Remove(skill);
+      await _context.SaveChangesAsync();
     } catch (Exception)
     {
       throw new RequestException(500);
@@ -78,8 +78,8 @@ public class SkillRepo : IService<Skill, SkillSearcheable>
   {
     try
     {
-      Context.Entry(skill).State = EntityState.Modified;
-      await Context.SaveChangesAsync();
+      _context.Entry(skill).State = EntityState.Modified;
+      await _context.SaveChangesAsync();
     } catch (DbUpdateException)
     {
       throw new RequestException(500);

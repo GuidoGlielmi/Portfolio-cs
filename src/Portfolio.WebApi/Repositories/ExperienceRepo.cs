@@ -8,7 +8,7 @@ namespace Portfolio.WebApi.Repositories;
 
 public class ExperienceRepo : IService<Experience, ExperienceSearcheable>
 {
-  public PortfolioContext _context { get; }
+  private readonly PortfolioContext _context;
 
   public ExperienceRepo(PortfolioContext context)
   {

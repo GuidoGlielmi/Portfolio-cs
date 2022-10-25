@@ -8,7 +8,7 @@ namespace Portfolio.WebApi.Repositories;
 
 public class EducationRepo : IService<Education, EducationSearcheable>
 {
-  public PortfolioContext _context { get; }
+  private readonly PortfolioContext _context;
 
   public EducationRepo(PortfolioContext context)
   {
