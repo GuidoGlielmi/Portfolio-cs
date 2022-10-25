@@ -1,0 +1,7 @@
+﻿[*.{cs,vb}]
+
+# IDE0048: Add parentheses for clarity
+dotnet_diagnostic.IDE0048.severity = warning
+
+# IDE0007: Use implicit type
+dotnet_diagnostic.IDE0007.severity = suggestion
