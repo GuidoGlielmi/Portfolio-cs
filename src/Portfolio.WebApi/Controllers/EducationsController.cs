@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Portfolio.WebApi.DTO;
 using Portfolio.WebApi.DTO.EducationDtos;
 using Portfolio.WebApi.Errors;
+
 using Portfolio.WebApi.IRepositories;
 using Portfolio.WebApi.Mapper;
 using Portfolio.WebApi.Models;
@@ -28,13 +30,19 @@ public class EducationsController : ControllerBase
 
   private readonly PortfolioMapper<Education, EducationPostDto, EducationPutDto> _mapper;
 
-  public EducationsController(IService<Education, EducationSearcheable> service, PortfolioMapper<Education, EducationPostDto, EducationPutDto> mapper, ILogger<EducationsController> logger)
+  //private readonly IFilter<Education, EducationSearcheable> _filter;
+
+  public EducationsController(IService<Education, EducationSearcheable> service,
+    PortfolioMapper<Education, EducationPostDto, EducationPutDto> mapper,
+    ILogger<EducationsController> logger)
+  //IFilter<Education, EducationSearcheable> filter)
   {
     _repo = service;
     _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     // the container may be other than the provided by ASP.NET, which may be null
     //HttpContext.RequestServices.GetService(typeof(ILogger<EducationsController>));
     _mapper = mapper;
+    //_filter = filter;
   }
 
   // GET: api/Educations

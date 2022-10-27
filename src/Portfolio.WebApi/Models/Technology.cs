@@ -1,9 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Portfolio.WebApi.DTO.TechnologyDtos;
+using Portfolio.WebApi.Mapper;
 using System.Text.Json.Serialization;
 
 namespace Portfolio.WebApi.Models;
 
-public class Technology
+public class Technology :
+  IMapFrom<TechnologyPostDto>,
+  IMapFrom<TechnologyPutDto>,
+  IMapFrom<IEnumerable<TechnologyPostDto>>,
+  IMapFrom<IEnumerable<TechnologyPutDto>>
 {
   public Guid Id { get; set; }
 

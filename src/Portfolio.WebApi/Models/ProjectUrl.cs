@@ -1,8 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Portfolio.WebApi.DTO.ProjectUrlDtos;
+using Portfolio.WebApi.Mapper;
+using System.ComponentModel.DataAnnotations;
 
 namespace Portfolio.WebApi.Models;
 
-public class ProjectUrl //: IValidatableObject
+public class ProjectUrl ://: IValidatableObject
+  IMapFrom<ProjectUrlPostDto>,
+  IMapFrom<ProjectUrlPutDto>,
+  IMapFrom<IEnumerable<ProjectUrlPostDto>>,
+  IMapFrom<IEnumerable<ProjectUrlPutDto>>
 {
   public Guid Id { get; set; }
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.WebApi.DTO;
 using Portfolio.WebApi.DTO.TechnologyDtos;
 using Portfolio.WebApi.Errors;
+
 using Portfolio.WebApi.IRepositories;
 using Portfolio.WebApi.Mapper;
 using Portfolio.WebApi.Models;
@@ -19,8 +20,8 @@ public class TechnologiesController : ControllerBase
 
   private readonly PortfolioMapper<Technology, TechnologyPostDto, TechnologyPutDto> _mapper;
 
-  public TechnologiesController(ITechnologyService<Technology,
-    TechnologySearcheable> repo,
+
+  public TechnologiesController(ITechnologyService<Technology, TechnologySearcheable> repo,
     PortfolioMapper<Technology, TechnologyPostDto, TechnologyPutDto> mapper)
   {
     _repo = repo;

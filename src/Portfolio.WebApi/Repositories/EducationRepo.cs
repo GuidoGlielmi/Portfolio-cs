@@ -46,7 +46,6 @@ public class EducationRepo : IService<Education, EducationSearcheable>
     }
     return educations;
   }
-
   public async Task<Education> GetById(Guid id)
   {
     Education foundEducation = await _context.Educations

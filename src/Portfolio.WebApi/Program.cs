@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Portfolio.WebApi.Errors;
+using Portfolio.WebApi.IRepositories;
+using Portfolio.WebApi.Mapper;
 using Portfolio.WebApi.Models;
 using Portfolio.WebApi.Repositories;
 using System.Text;
@@ -66,10 +68,20 @@ string connString = builder.Configuration.GetConnectionString("PortfolioDb");
 // for Development and Production
 builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseNpgsql(connString));
 
-RepositoryConfiguration.AddRepositoryInjections(builder);
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly()); // get the profile in this assembly
+
+var genericInterfacesToImplement = new Type[] {
+  typeof(IService<,>),
+  typeof(IProjectService<,>),
+  typeof(ITechnologyService<,>),
+  //typeof(IPortfolioMapper<,,>)
+};
+var genericClassesToImplement = new Type[] { typeof(PortfolioMapper<,,>) };
+
+
+PortfolioRepositoryConfiguration.Configure(builder, genericInterfacesToImplement, genericClassesToImplement);
+
 
 builder.Services.Configure<ApiBehaviorOptions>(opt =>
 {

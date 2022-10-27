@@ -1,7 +1,14 @@
 ﻿
+using Portfolio.WebApi.DTO.UserDtos;
+using Portfolio.WebApi.Mapper;
+
 namespace Portfolio.WebApi.Models;
 
-public class User
+public class User :
+  IMapFrom<UserPostDto>,
+  IMapFrom<UserPutDto>,
+  IMapFrom<IEnumerable<UserPostDto>>,
+  IMapFrom<IEnumerable<UserPutDto>>
 {
   public Guid Id { get; set; }
 

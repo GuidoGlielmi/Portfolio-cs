@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.WebApi.DTO;
 using Portfolio.WebApi.DTO.UserDtos;
 using Portfolio.WebApi.Errors;
+
 using Portfolio.WebApi.IRepositories;
 using Portfolio.WebApi.Mapper;
 using Portfolio.WebApi.Models;
@@ -20,7 +21,9 @@ public class UsersController : ControllerBase
 
   private readonly PortfolioMapper<User, UserPostDto, UserPutDto> _mapper;
 
-  public UsersController(IService<User, UserSearcheable> repo, PortfolioMapper<User, UserPostDto, UserPutDto> mapper)
+
+  public UsersController(IService<User, UserSearcheable> repo,
+    PortfolioMapper<User, UserPostDto, UserPutDto> mapper)
   {
     _repo = repo;
     _mapper = mapper;

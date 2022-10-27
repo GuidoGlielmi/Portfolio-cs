@@ -1,9 +1,11 @@
-﻿using Portfolio.WebApi.Validations.CustomAttributes;
+﻿using Portfolio.WebApi.Mapper;
+using Portfolio.WebApi.Models;
+using Portfolio.WebApi.Validations.CustomAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Portfolio.WebApi.DTO.EducationDtos;
 
-public class EducationPostDto
+public class EducationPostDto : IMapFrom<Education>
 {
 
   [Required]

@@ -1,7 +1,14 @@
 ﻿
+using Portfolio.WebApi.DTO.SkillDtos;
+using Portfolio.WebApi.Mapper;
+
 namespace Portfolio.WebApi.Models;
 
-public class Skill
+public class Skill :
+  IMapFrom<SkillPostDto>,
+  IMapFrom<SkillPutDto>,
+  IMapFrom<IEnumerable<SkillPostDto>>,
+  IMapFrom<IEnumerable<SkillPutDto>>
 {
   public Guid Id { get; set; }
 

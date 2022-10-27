@@ -13,35 +13,35 @@ namespace Portfolio.WebApi.Mapper.Profiles;
 
 public class PortfolioProfile : Profile
 {
-  public PortfolioProfile()
-  {
-    CreateMap<Education, EducationPostDto>().ReverseMap();
-    CreateMap<Education, EducationPutDto>().ReverseMap();
-    CreateMap<Education, EducationSearcheable>().ReverseMap();
+  //public PortfolioProfile()
+  //{
+  //  CreateMap<Education, EducationPostDto>().ReverseMap();
+  //  CreateMap<Education, EducationPutDto>().ReverseMap();
+  //  CreateMap<Education, EducationSearcheable>().ReverseMap();
 
-    CreateMap<Experience, ExperiencePostDto>().ReverseMap();
-    CreateMap<Experience, ExperiencePutDto>().ReverseMap();
-    CreateMap<Experience, ExperienceSearcheable>().ReverseMap();
+  //  CreateMap<Experience, ExperiencePostDto>().ReverseMap();
+  //  CreateMap<Experience, ExperiencePutDto>().ReverseMap();
+  //  CreateMap<Experience, ExperienceSearcheable>().ReverseMap();
 
-    CreateMap<Project, ProjectPostDto>().ReverseMap();
-    CreateMap<Project, ProjectPutDto>().ReverseMap();
-    CreateMap<Project, ProjectSearcheable>().ReverseMap();
+  //  CreateMap<Project, ProjectPostDto>().ReverseMap();
+  //  CreateMap<Project, ProjectPutDto>().ReverseMap();
+  //  CreateMap<Project, ProjectSearcheable>().ReverseMap();
 
-    CreateMap<ProjectUrl, ProjectUrlPostDto>().ReverseMap();
-    CreateMap<ProjectUrl, ProjectUrlPutDto>().ReverseMap();
+  //  CreateMap<ProjectUrl, ProjectUrlPostDto>().ReverseMap();
+  //  CreateMap<ProjectUrl, ProjectUrlPutDto>().ReverseMap();
 
-    CreateMap<Skill, SkillPostDto>().ReverseMap();
-    CreateMap<Skill, SkillPutDto>().ReverseMap();
-    CreateMap<Skill, SkillSearcheable>().ReverseMap();
+  //  CreateMap<Skill, SkillPostDto>().ReverseMap();
+  //  CreateMap<Skill, SkillPutDto>().ReverseMap();
+  //  CreateMap<Skill, SkillSearcheable>().ReverseMap();
 
-    CreateMap<Technology, TechnologyPostDto>().ReverseMap();
-    CreateMap<Technology, TechnologyPutDto>().ReverseMap();
-    CreateMap<Technology, TechnologyInProjectDto>().ReverseMap();
-    CreateMap<Technology, TechnologySearcheable>().ReverseMap();
+  //  CreateMap<Technology, TechnologyPostDto>().ReverseMap();
+  //  CreateMap<Technology, TechnologyPutDto>().ReverseMap();
+  //  CreateMap<Technology, TechnologyInProjectDto>().ReverseMap();
+  //  CreateMap<Technology, TechnologySearcheable>().ReverseMap();
 
-    CreateMap<User, UserPostDto>().ReverseMap();
-    CreateMap<User, UserPutDto>().ReverseMap();
-    CreateMap<User, UserSearcheable>().ReverseMap();
-    //CreateMap<Technology, TechnologyDto>().AfterMap((t, dto) => dto.ProjectsIds = (List<Guid>)t.Projects.Select(p => p.Id));
-  }
+  //  CreateMap<User, UserPostDto>().ReverseMap();
+  //  CreateMap<User, UserPutDto>().ReverseMap();
+  //  CreateMap<User, UserSearcheable>().ReverseMap();
+  //  //CreateMap<Technology, TechnologyDto>().AfterMap((t, dto) => dto.ProjectsIds = (List<Guid>)t.Projects.Select(p => p.Id));
+  //}
 }

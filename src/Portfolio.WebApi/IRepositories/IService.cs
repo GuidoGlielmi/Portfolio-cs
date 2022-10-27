@@ -6,8 +6,6 @@ public interface IService<T, TSearcheable>
 {
   Task<IEnumerable<T>> GetAll();
 
-  IEnumerable<T> Filter(IEnumerable<T> entities, TSearcheable searchObj);
-
   Task<T> GetById(Guid id);
 
   Task Create(T entity);
@@ -16,5 +14,5 @@ public interface IService<T, TSearcheable>
 
   Task Delete(T entity);
 
-  //Task Patch(T entity);
+  IEnumerable<T> Filter(IEnumerable<T> entities, TSearcheable searchObj);
 }

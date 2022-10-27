@@ -35,7 +35,6 @@ public class TechnologyRepo : ITechnologyService<Technology, TechnologySearcheab
 
     return techs;
   }
-
   public async Task<Technology> GetById(Guid id)
   {
     Technology foundTechnology = await _context.Technologies.FindAsync(id);

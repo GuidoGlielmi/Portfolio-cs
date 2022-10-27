@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.WebApi.DTO;
 using Portfolio.WebApi.DTO.ProjectDtos;
 using Portfolio.WebApi.Errors;
+
 using Portfolio.WebApi.IRepositories;
 using Portfolio.WebApi.Mapper;
 using Portfolio.WebApi.Models;
@@ -19,7 +20,8 @@ public class ProjectsController : ControllerBase
 
   private readonly PortfolioMapper<Project, ProjectPostDto, ProjectPutDto> _mapper;
 
-  public ProjectsController(IProjectService<Project, ProjectSearcheable> service, PortfolioMapper<Project, ProjectPostDto, ProjectPutDto> mapper)
+  public ProjectsController(IProjectService<Project, ProjectSearcheable> service,
+    PortfolioMapper<Project, ProjectPostDto, ProjectPutDto> mapper)
   {
     _repo = service;
     _mapper = mapper;

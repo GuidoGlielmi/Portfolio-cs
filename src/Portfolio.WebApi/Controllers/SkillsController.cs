@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.WebApi.DTO;
 using Portfolio.WebApi.DTO.SkillDtos;
 using Portfolio.WebApi.Errors;
+
 using Portfolio.WebApi.IRepositories;
 using Portfolio.WebApi.Mapper;
 using Portfolio.WebApi.Models;
@@ -19,7 +20,9 @@ public class SkillsController : ControllerBase
 
   private readonly PortfolioMapper<Skill, SkillPostDto, SkillPutDto> _mapper;
 
-  public SkillsController(IService<Skill, SkillSearcheable> service, PortfolioMapper<Skill, SkillPostDto, SkillPutDto> mapper)
+
+  public SkillsController(IService<Skill, SkillSearcheable> service,
+    PortfolioMapper<Skill, SkillPostDto, SkillPutDto> mapper)
   {
     _repo = service;
     _mapper = mapper;

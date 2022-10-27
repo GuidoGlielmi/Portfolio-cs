@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Portfolio.WebApi.DTO.ExperienceDtos;
+using Portfolio.WebApi.Mapper;
 
 namespace Portfolio.WebApi.Models;
 
-public class Experience : UserResource
+public class Experience : UserResource,
+  IMapFrom<ExperiencePostDto>,
+  IMapFrom<ExperiencePutDto>,
+  IMapFrom<IEnumerable<ExperiencePostDto>>,
+  IMapFrom<IEnumerable<ExperiencePutDto>>
 {
   public Guid Id { get; set; }
 

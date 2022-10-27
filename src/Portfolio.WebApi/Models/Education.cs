@@ -1,9 +1,15 @@
 ﻿//using Microsoft.Build.Framework; // THIS IS NOT THE CORRECT IMPORT FOR DATA ANNOTATIONS
+using Portfolio.WebApi.DTO.EducationDtos;
+using Portfolio.WebApi.Mapper;
 using System.ComponentModel.DataAnnotations; // THIS IS
 
 namespace Portfolio.WebApi.Models;
 
-public class Education : UserResource
+public class Education : UserResource,
+  IMapFrom<EducationPostDto>,
+  IMapFrom<EducationPutDto>,
+  IMapFrom<IEnumerable<EducationPostDto>>,
+  IMapFrom<IEnumerable<EducationPutDto>>
 {
   public Guid Id { get; set; }
 
