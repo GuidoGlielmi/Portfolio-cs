@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.WebApi.AuthorizationRequirements;
+//using Portfolio.WebApi.AuthorizationRequirements;
 using Portfolio.WebApi.DTO.EducationDtos;
 using Portfolio.WebApi.Extensions;
 using Portfolio.WebApi.Mediator.Commands.EducationCommands;
@@ -54,7 +54,7 @@ public class EducationsController : ControllerBase
 
   // GET: api/Educations/5
   [HttpGet("{id}")]
-  [MinimumAgeAuthorize(21)]
+  //[MinimumAgeAuthorize(21)]
   public async Task<ActionResult<EducationPutDto>> GetEducation(Guid id)
   {
     //Education createdEducation = await _repo.GetById(id);
