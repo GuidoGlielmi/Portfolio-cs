@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Portfolio.WebApi.Extensions;
 using Portfolio.WebApi.Filters;
 using Portfolio.WebApi.Models;
-using System.Configuration;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using TokenOptions = Portfolio.WebApi.Security.Token.TokenOptions;
@@ -56,7 +55,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // DOTNET_ and ASPNETCORE_
 
 
-builder.WebHost.UseUrls("https://localhost:3000");
+//builder.WebHost.UseUrls("https://localhost:3000"); // url used for the server
 
 
 builder.Services.AddCors(opt =>
@@ -164,9 +163,17 @@ builder.Services.AddAutoMapper(assembly); // get the profiles in this assembly
 // a local environment overrides any other so using one would mean the same value
 // for Development and Production
 
-string portfolioDatabaseConnectionString = builder.Configuration["Database:ConnectionString"];
+string portfolioDatabaseConnectionString;
 
-builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseSqlServer(portfolioDatabaseConnectionString));
+if (Environment.GetEnvironmentVariable("IS_LOCAL") == "TRUE")
+{
+  portfolioDatabaseConnectionString = builder.Configuration["Database:ConnectionStringPostgres"];
+  builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseNpgsql(portfolioDatabaseConnectionString));
+} else
+{
+  portfolioDatabaseConnectionString = builder.Configuration["Database:ConnectionStringAzureSql"];
+  builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseSqlServer(portfolioDatabaseConnectionString));
+}
 
 builder.Services.Configure<ApiBehaviorOptions>(opt =>
 {
