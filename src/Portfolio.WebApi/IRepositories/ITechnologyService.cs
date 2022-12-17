@@ -2,7 +2,7 @@
 
 namespace Portfolio.WebApi.IRepositories;
 
-public interface ITechnologyService<T, TSearcheable> : IService<T, TSearcheable>
+public interface ITechnologyService<T, TSearcheable> : IPortfolioService<T, TSearcheable>
   where T : class
   where TSearcheable : class
 {

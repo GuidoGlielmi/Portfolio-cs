@@ -30,5 +30,7 @@ public class User :
 
   public Role Role { get; set; } = new();
 
-  public DateTime CreatedAt { get; set; }
+  public Guid RoleId { get; set; } = new();
+
+  public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

@@ -17,19 +17,9 @@ public class Experience : UserResource,
 
   public string Description { get; set; }
 
-  public string EndDate { get; private set; } = "Current";
+  public string EndDate { get; set; } = "Current";
 
-  public string StartDate { get; private set; }
-
-  public void SetStartDate(string startDate)
-  {
-    StartDate = DateTime.Parse(startDate).ToString("MM/yyyy");
-  }
-
-  public void SetEndDate(string endDate)
-  {
-    StartDate = endDate.ToLower() == "current" ? "Current" : DateTime.Parse(endDate).ToString("MM/yyyy");
-  }
+  public string StartDate { get; set; }
 
   public string ExperienceImg { get; set; }
 }

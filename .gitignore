@@ -5,8 +5,16 @@
 
 #random files
 Auth/
+Middlewares/
+PortfolioTests/
+ResultFilter.cs
+SearchFilter.cs
+Searcheable.cs
 UnauthorizedResponseActionFilter.cs
-
+PortfolioRepositoryService.cs
+Hashing/
+PortfolioProfile.cs
+AuthorizationRequirements/
 # User-specific files
 *.rsuser
 *.suo

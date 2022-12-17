@@ -1,27 +1,31 @@
-﻿namespace Portfolio.WebApi.Mapper;
+﻿using AutoMapper;
 
-public interface IPortfolioMapper<T, TCreateDto, TPutDto>
-  where T : class
-  where TCreateDto : class
-  where TPutDto : class
+namespace Portfolio.WebApi.Mapper;
+
+public interface IPortfolioMapper<T, TPostDto, TPutDto>
+ where T : class
+ where TPostDto : class
+ where TPutDto : class
 {
-  public TCreateDto ToPostDto(T entity);
+  IMapper Mapper { get; }
 
-  public IEnumerable<TCreateDto> ToPostDto(IEnumerable<T> entity);
+  public TPostDto ToPostDto(T entity) => Mapper.Map<TPostDto>(entity);
 
-
-  public T FromPostDto(TCreateDto entity);
-
-  public IEnumerable<T> FromPostDto(IEnumerable<TCreateDto> entity);
+  public IEnumerable<TPostDto> ToPostDto(IEnumerable<T> entity) => entity.Select(e => Mapper.Map<TPostDto>(e));
 
 
-  public TPutDto ToPutDto(T entity);
+  public T FromPostDto(TPostDto entity) => Mapper.Map<T>(entity);
 
-  public IEnumerable<TPutDto> ToPutDto(IEnumerable<T> entity);
+  public IEnumerable<T> FromPostDto(IEnumerable<TPostDto> entity) => entity.Select(e => Mapper.Map<T>(e));
 
 
-  public T FromPutDto(TPutDto entity);
+  public TPutDto ToPutDto(T entity) => Mapper.Map<TPutDto>(entity);
 
-  public IEnumerable<T> FromPutDto(IEnumerable<TPutDto> entity);
+  public IEnumerable<TPutDto> ToPutDto(IEnumerable<T> entity) => entity.Select(e => Mapper.Map<TPutDto>(e));
+
+
+  public T FromPutDto(TPutDto entity) => Mapper.Map<T>(entity);
+
+  public IEnumerable<T> FromPutDto(IEnumerable<TPutDto> entity) => entity.Select(e => Mapper.Map<T>(e));
 
 }

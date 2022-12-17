@@ -6,7 +6,7 @@ using Portfolio.WebApi.Models;
 
 namespace Portfolio.WebApi.Repositories;
 
-public class EducationRepo : IService<Education, EducationSearcheable>
+public class EducationRepo : IPortfolioService<Education, EducationSearcheable>
 {
   private readonly PortfolioContext _context;
 
@@ -26,31 +26,9 @@ public class EducationRepo : IService<Education, EducationSearcheable>
     }
   }
 
-  public IEnumerable<Education> Filter(IEnumerable<Education> educations, EducationSearcheable searchObj)
-  {
-    if (!string.IsNullOrEmpty(searchObj.Degree))
-    {
-      educations = educations.Where(e => e.Degree.Contains(searchObj.Degree.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.School))
-    {
-      educations = educations.Where(e => e.School.Contains(searchObj.School.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.StartDate))
-    {
-      educations = educations.Where(e => e.StartDate.Contains(searchObj.StartDate.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.EndDate))
-    {
-      educations = educations.Where(e => e.EndDate.Contains(searchObj.EndDate.Trim()));
-    }
-    return educations;
-  }
   public async Task<Education> GetById(Guid id)
   {
-    Education foundEducation = await _context.Educations
-      .Include(e => e.User)
-      .FirstOrDefaultAsync(e => e.Id == id);
+    Education foundEducation = (await GetAll()).FirstOrDefault(e => e.Id == id);
     return foundEducation ?? throw new RequestException(404);
   }
 
@@ -78,7 +56,6 @@ public class EducationRepo : IService<Education, EducationSearcheable>
     }
   }
 
-
   public async Task Update(Education education)
   {
     try
@@ -91,3 +68,16 @@ public class EducationRepo : IService<Education, EducationSearcheable>
     }
   }
 }
+
+
+//public override IEnumerable<Education> Filter(IEnumerable<Education> educations, EducationSearcheable searchObj)
+//{
+//  var searchObjKeyValuePair = ToDictionary<string>(searchObj);
+
+//  foreach (var (key, value) in searchObjKeyValuePair)
+//  {
+//    educations = educations.DynamicWhere(key, value);
+//  }
+
+//  return educations;
+//}

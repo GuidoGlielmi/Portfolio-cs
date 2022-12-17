@@ -6,7 +6,7 @@ using Portfolio.WebApi.Models;
 
 namespace Portfolio.WebApi.Repositories;
 
-public class ExperienceRepo : IService<Experience, ExperienceSearcheable>
+public class ExperienceRepo : IPortfolioService<Experience, ExperienceSearcheable>
 {
   private readonly PortfolioContext _context;
 
@@ -24,28 +24,6 @@ public class ExperienceRepo : IService<Experience, ExperienceSearcheable>
     {
       throw new RequestException(500);
     }
-  }
-
-  public IEnumerable<Experience> Filter(IEnumerable<Experience> experiences, ExperienceSearcheable searchObj)
-  {
-    if (!string.IsNullOrEmpty(searchObj.Description))
-    {
-      experiences = experiences.Where(e => e.Description.Contains(searchObj.Description.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.Title))
-    {
-      experiences = experiences.Where(e => e.Title.Contains(searchObj.Title.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.StartDate))
-    {
-      experiences = experiences.Where(e => e.StartDate.Contains(searchObj.StartDate.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.EndDate))
-    {
-      experiences = experiences.Where(e => e.EndDate.Contains(searchObj.EndDate.Trim()));
-    }
-
-    return experiences;
   }
 
   public async Task<Experience> GetById(Guid id)
@@ -91,3 +69,26 @@ public class ExperienceRepo : IService<Experience, ExperienceSearcheable>
   }
 
 }
+
+
+//public IEnumerable<Experience> Filter(IEnumerable<Experience> experiences, ExperienceSearcheable searchObj)
+//{
+//  if (!string.IsNullOrEmpty(searchObj.Description))
+//  {
+//    experiences = experiences.Where(e => e.Description.Contains(searchObj.Description.Trim()));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.Title))
+//  {
+//    experiences = experiences.Where(e => e.Title.Contains(searchObj.Title.Trim()));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.StartDate))
+//  {
+//    experiences = experiences.Where(e => e.StartDate.Contains(searchObj.StartDate.Trim()));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.EndDate))
+//  {
+//    experiences = experiences.Where(e => e.EndDate.Contains(searchObj.EndDate.Trim()));
+//  }
+
+//  return experiences;
+//}

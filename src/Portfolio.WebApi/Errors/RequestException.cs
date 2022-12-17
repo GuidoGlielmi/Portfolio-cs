@@ -1,32 +1,27 @@
-﻿using Portfolio.WebApi.DTO;
+﻿using System.Net;
 
 namespace Portfolio.WebApi.Errors;
 
 public class RequestException : Exception
 {
-  private enum StatusMessages
-  {
-    Server_Error = 500,
-    Not_Found = 404,
-    Bad_Request = 400,
-    Forbidden = 403, // used for an existent user that wants to access protected info
-  }
-
-  public ResponseDto<string> Error { get; set; }
+  public int Code { get; }
+  public IEnumerable<string> ErrorMessages { get; }
 
   public RequestException(int code)
   {
-    Error = new ResponseDto<string>(code, ((StatusMessages)code).ToString());
+    Code = code;
+    ErrorMessages = new List<string> { ((HttpStatusCode)code).ToString() };
   }
 
-  public RequestException(int code, IEnumerable<string> messages)
+  public RequestException(int code, IEnumerable<string> errorMessages)
   {
-    Error = new ResponseDto<string>(code, messages);
+    Code = code;
+    ErrorMessages = errorMessages;
   }
 
   public RequestException(int code, string message)
-      : base(message)
   {
-    Error = new ResponseDto<string>(code, message);
+    Code = code;
+    ErrorMessages = new List<string> { message };
   }
 }

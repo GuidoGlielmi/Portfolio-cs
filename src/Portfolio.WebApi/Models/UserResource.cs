@@ -1,7 +1,4 @@
-﻿using Microsoft.Build.Framework;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Portfolio.WebApi.Models;
+﻿namespace Portfolio.WebApi.Models;
 
 public class UserResource
 {

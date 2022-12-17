@@ -26,15 +26,6 @@ public class TechnologyRepo : ITechnologyService<Technology, TechnologySearcheab
     }
   }
 
-  public IEnumerable<Technology> Filter(IEnumerable<Technology> techs, TechnologySearcheable searchObj)
-  {
-    if (!string.IsNullOrEmpty(searchObj.Name))
-    {
-      techs = techs.Where(t => t.Name.ToString().ToLower() == searchObj.Name.ToLower());
-    }
-
-    return techs;
-  }
   public async Task<Technology> GetById(Guid id)
   {
     Technology foundTechnology = await _context.Technologies.FindAsync(id);
@@ -94,3 +85,12 @@ public class TechnologyRepo : ITechnologyService<Technology, TechnologySearcheab
   }
 
 }
+//public IEnumerable<Technology> Filter(IEnumerable<Technology> techs, TechnologySearcheable searchObj)
+//{
+//  if (!string.IsNullOrEmpty(searchObj.Name))
+//  {
+//    techs = techs.Where(t => t.Name.ToString().ToLower() == searchObj.Name.ToLower());
+//  }
+
+//  return techs;
+//}

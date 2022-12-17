@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.WebApi.DTO;
 using Portfolio.WebApi.DTO.UserDtos;
-using Portfolio.WebApi.Errors;
-
+using Portfolio.WebApi.Extensions;
 using Portfolio.WebApi.IRepositories;
 using Portfolio.WebApi.Mapper;
+using Portfolio.WebApi.Mediator.Commands.UserCommands;
+using Portfolio.WebApi.Mediator.Queries.UserQueries;
 using Portfolio.WebApi.Models;
 
 namespace Portfolio.WebApi.Controllers;
@@ -14,128 +14,87 @@ namespace Portfolio.WebApi.Controllers;
 [Route("api/[controller]")] // implemented at controller level
 // to provide a prefix to all templates defined at action level
 [ApiController]
-[Authorize(Roles = "ADMIN")]
+//[Authorize(Roles = "ADMIN")]
 public class UsersController : ControllerBase
 {
-  private readonly IService<User, UserSearcheable> _repo;
+  private readonly IMediator _mediator;
 
-  private readonly PortfolioMapper<User, UserPostDto, UserPutDto> _mapper;
-
-
-  public UsersController(IService<User, UserSearcheable> repo,
-    PortfolioMapper<User, UserPostDto, UserPutDto> mapper)
+  public UsersController(IMediator mediator)
   {
-    _repo = repo;
-    _mapper = mapper;
+    _mediator = mediator;
   }
 
   // GET: api/Users
   [HttpGet]
-  [AllowAnonymous]
-  public async Task<ActionResult<ResponseDto<UserPutDto>>> GetUsers([FromQuery] UserSearcheable searchObj)
+  //[AllowAnonymous]
+  public async Task<IEnumerable<UserPutDto>> GetUsers([FromQuery] UserSearcheable searchObj)
   {
-    try
-    {
-      IEnumerable<User> users = await _repo.GetAll();
-      if (ModelState.Count > 0)
-      {
-        users = _repo.Filter(users, searchObj);
-      }
-      return new ResponseDto<UserPutDto>(_mapper.ToPutDto(users));
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //IEnumerable<User> users = await _repo.GetAll();
+    //if (ModelState.Count > 0)
+    //{
+    //  users = users.DynamicWhereAll(searchObj);
+    //}
+    //return _mapper.ToPutDto(users);
+    return await _mediator.Send(new GetUsersQuery(searchObj.ToDictionary()));
   }
 
   // GET: api/Users/5
   [HttpGet("{id}")]
-  [AllowAnonymous]
-  public async Task<ActionResult<ResponseDto<UserPutDto>>> GetUser(Guid id)
+  //[AllowAnonymous]
+  public async Task<UserPutDto> GetUser(Guid id)
   {
-    try
-    {
-      User user = await _repo.GetById(id);
-      return new ResponseDto<UserPutDto>(_mapper.ToPutDto(user));
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //User user = await _repo.GetById(id);
+    //return _mapper.ToPutDto(user);
+    return await _mediator.Send(new GetUserByIdQuery(id));
   }
 
   // PUT: api/Users/5
   [HttpPut("{id}")]
-  public async Task<ActionResult<ResponseDto<string>>> PutUser(UserPutDto userDto)
+  public async Task<IActionResult> PutUser(UserPutDto userDto)
   {
-    try
-    {
-      User user = _mapper.FromPutDto(userDto);
-      await _repo.Update(user);
-      return new ResponseDto<string>(201);
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //User user = _mapper.FromPutDto(userDto);
+    //await _repo.Update(user);
+    await _mediator.Send(new PutUserCommand(userDto));
+    return Ok();
   }
 
   // POST: api/Users
   [HttpPost]
-  public async Task<ActionResult<ResponseDto<UserPutDto>>> PostUser(UserPostDto userDto)
+  public async Task<IActionResult> PostUser(UserPostDto userDto)
   {
-    try
-    {
-      User user = _mapper.FromPostDto(userDto);
-      await _repo.Create(user);
-      var response = new ResponseDto<UserPutDto>(_mapper.ToPutDto(user));
-      return CreatedAtAction(nameof(GetUser), new { id = user.Id }, response);
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //User user = _mapper.FromPostDto(userDto);
+    //await _repo.Create(user);
+    //var response = _mapper.ToPutDto(user);
+    var createdUser = await _mediator.Send(new PostUserCommand(userDto));
+    return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
+
   }
 
   // DELETE: api/Users/5
   [HttpDelete("{id}")]
-  public async Task<ActionResult<ResponseDto<string>>> DeleteUser(Guid id)
+  public async Task<IActionResult> DeleteUser(Guid id)
   {
-    try
-    {
-      User user = await _repo.GetById(id);
-      await _repo.Delete(user);
-      return new ResponseDto<string>(201);
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //User user = await _repo.GetById(id);
+    //await _repo.Delete(user);
+    await _mediator.Send(new DeleteUserCommand(id));
+    return Ok();
   }
 
   [HttpPatch("{id}")]
-  public async Task<ActionResult<ResponseDto<string>>> PatchUser(Guid id, JsonPatchDocument<User> patchDocument)
+  public async Task<IActionResult> PatchUser(Guid id, JsonPatchDocument<UserPutDto> patchDocument)
   {
-    User foundUser;
-    try
-    {
-      foundUser = await _repo.GetById(id);
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //User foundUser = await _repo.GetById(id);
+    //patchDocument.ApplyTo(foundUser, ModelState);
 
-    patchDocument.ApplyTo(foundUser, ModelState);
+    //if (!ModelState.IsValid || !TryValidateModel(foundUser))
+    //{
+    //  IEnumerable<string> errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+    //  return StatusCode(400, errors);
+    //}
 
-    if (!ModelState.IsValid || !TryValidateModel(foundUser))
-    {
-      IEnumerable<string> errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-      return StatusCode(400, new RequestException(400, errors).Error);
-    }
-
-    try
-    {
-      await _repo.Update(foundUser);
-      return new ResponseDto<string>();
-    } catch (RequestException ex)
-    {
-      return StatusCode(ex.Error.Code, ex.Error);
-    }
+    //await _mediator.Send(new PutUserCommand(foundUser));
+    //await _repo.Update(foundUser);
+    await _mediator.Send(new PatchUserCommand(id, patchDocument));
+    return Ok();
   }
 }

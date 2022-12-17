@@ -15,12 +15,12 @@ public class FilesController : ControllerBase
   }
 
   [HttpGet("{fileId}")]
-  public ActionResult<ResponseDto<string>> GetFile(string fileId)
+  public IActionResult GetFile(string fileId)
   {
     string pathToFile = "stack_Spring.png";
     if (!System.IO.File.Exists(pathToFile))
     {
-      return new ResponseDto<string>(404);
+      return NotFound();
     }
 
     if (!FECTP.TryGetContentType(pathToFile, out string contentType))

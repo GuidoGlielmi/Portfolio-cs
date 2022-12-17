@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.WebApi.DTO;
 
 namespace Portfolio.WebApi.Models;
 
-public /*partial*/ class PortfolioContext : DbContext
+public class PortfolioContext : DbContext
 {
   private readonly string connString;
+
   public PortfolioContext() { }
   public PortfolioContext(string connString)
   {
     this.connString = connString;
   }
-
   public PortfolioContext(DbContextOptions<PortfolioContext> options) : base(options) { }
 
   public DbSet<Education> Educations { get; set; }
@@ -219,13 +218,12 @@ public /*partial*/ class PortfolioContext : DbContext
       entity.ToTable("role");
 
       entity.Property(e => e.Id)
-                //.ValueGeneratedNever()
                 .HasColumnName("id");
 
       entity.Property(e => e.RoleName)
                 .HasMaxLength(255)
                 .HasColumnName("role_name");
-    });
+    }).Entity<Role>().HasMany(r => r.Users).WithOne(u => u.Role).OnDelete(DeleteBehavior.SetNull);
 
     modelBuilder.Entity<Technology>(entity =>
     {
@@ -256,7 +254,6 @@ public /*partial*/ class PortfolioContext : DbContext
       entity.ToTable("users");
 
       entity.Property(e => e.Id)
-                ////.ValueGeneratedNever()
                 .HasColumnName("id");
 
       entity.Property(e => e.AboutMe)

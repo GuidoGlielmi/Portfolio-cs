@@ -7,12 +7,12 @@ public class TechnologyInProjectDto
 {
   public Guid Id { get; set; }
 
-  [MaxLength(60)]
-  [MinLength(3)]
-  [Required]
+  //[MaxLength(60)]
+  //[MinLength(3)]
+  //[Required]
   public string Name { get; set; }
 
-  [Required]
-  [ImagePathValidator(ErrorMessage = "Invalid technology image path")]
+  //[Required]
+  //[ImagePathValidator(ErrorMessage = "Invalid technology image path")]
   public string TechImg { get; set; }
 }

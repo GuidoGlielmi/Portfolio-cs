@@ -6,7 +6,7 @@ using Portfolio.WebApi.Models;
 
 namespace Portfolio.WebApi.Repositories;
 
-public class SkillRepo : IService<Skill, SkillSearcheable>
+public class SkillRepo : IPortfolioService<Skill, SkillSearcheable>
 {
   private readonly PortfolioContext _context;
 
@@ -24,24 +24,6 @@ public class SkillRepo : IService<Skill, SkillSearcheable>
     {
       throw new RequestException(500);
     }
-  }
-
-  public IEnumerable<Skill> Filter(IEnumerable<Skill> skills, SkillSearcheable searchObj)
-  {
-    if (!string.IsNullOrEmpty(searchObj.Name))
-    {
-      skills = skills.Where(p => p.Name.ToLower() == searchObj.Name.ToLower());
-    }
-    if (searchObj.AbilityPercentage != null)
-    {
-      skills = skills.Where(p => p.AbilityPercentage == searchObj.AbilityPercentage);
-    }
-    if (!string.IsNullOrEmpty(searchObj.Type))
-    {
-      skills = skills.Where(p => p.Type.ToString().ToLower() == searchObj.Type.ToLower());
-    }
-
-    return skills;
   }
 
   public async Task<Skill> GetById(Guid id)
@@ -87,3 +69,21 @@ public class SkillRepo : IService<Skill, SkillSearcheable>
   }
 
 }
+
+//public IEnumerable<Skill> Filter(IEnumerable<Skill> skills, SkillSearcheable searchObj)
+//{
+//  if (!string.IsNullOrEmpty(searchObj.Name))
+//  {
+//    skills = skills.Where(p => p.Name.ToLower() == searchObj.Name.ToLower());
+//  }
+//  if (searchObj.AbilityPercentage != null)
+//  {
+//    skills = skills.Where(p => p.AbilityPercentage == searchObj.AbilityPercentage);
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.Type))
+//  {
+//    skills = skills.Where(p => p.Type.ToString().ToLower() == searchObj.Type.ToLower());
+//  }
+
+//  return skills;
+//}

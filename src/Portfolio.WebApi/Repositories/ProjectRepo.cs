@@ -29,28 +29,6 @@ public class ProjectRepo : IProjectService<Project, ProjectSearcheable>
     }
   }
 
-  public IEnumerable<Project> Filter(IEnumerable<Project> projects, ProjectSearcheable searchObj)
-  {
-    if (!string.IsNullOrEmpty(searchObj.Title))
-    {
-      projects = projects.Where(p => p.Title.Contains(searchObj.Title.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.DeployUrl))
-    {
-      projects = projects.Where(p => p.DeployUrl.Contains(searchObj.DeployUrl.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.Description))
-    {
-      projects = projects.Where(p => p.Description.Contains(searchObj.Description.Trim()));
-    }
-    if (!string.IsNullOrEmpty(searchObj.Url))
-    {
-      projects = projects.Where(p => p.Urls.Any(u => u.Url.Contains(searchObj.Description.Trim())));
-    }
-
-    return projects;
-  }
-
   public async Task<Project> GetById(Guid id)
   {
     Project foundProject = await _context.Projects
@@ -113,3 +91,25 @@ public class ProjectRepo : IProjectService<Project, ProjectSearcheable>
     }
   }
 }
+
+//public IEnumerable<Project> Filter(IEnumerable<Project> projects, ProjectSearcheable searchObj)
+//{
+//  if (!string.IsNullOrEmpty(searchObj.Title))
+//  {
+//    projects = projects.Where(p => p.Title.Contains(searchObj.Title.Trim()));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.DeployUrl))
+//  {
+//    projects = projects.Where(p => p.DeployUrl.Contains(searchObj.DeployUrl.Trim()));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.Description))
+//  {
+//    projects = projects.Where(p => p.Description.Contains(searchObj.Description.Trim()));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.Url))
+//  {
+//    projects = projects.Where(p => p.Urls.Any(u => u.Url.Contains(searchObj.Description.Trim())));
+//  }
+
+//  return projects;
+//}

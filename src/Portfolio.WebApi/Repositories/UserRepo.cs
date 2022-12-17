@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.WebApi.DTO.UserDtos;
 using Portfolio.WebApi.Errors;
 using Portfolio.WebApi.IRepositories;
@@ -6,13 +7,15 @@ using Portfolio.WebApi.Models;
 
 namespace Portfolio.WebApi.Repositories;
 
-public class UserRepo : IService<User, UserSearcheable>
+public class UserRepo : IPortfolioService<User, UserSearcheable>
 {
   private readonly PortfolioContext _context;
+  private readonly IPasswordHasher<User> _passwordHasher;
 
-  public UserRepo(PortfolioContext context)
+  public UserRepo(PortfolioContext context, IPasswordHasher<User> passwordHasher)
   {
     _context = context;
+    _passwordHasher = passwordHasher;
   }
 
   public async Task<IEnumerable<User>> GetAll()
@@ -26,32 +29,6 @@ public class UserRepo : IService<User, UserSearcheable>
     }
   }
 
-  public IEnumerable<User> Filter(IEnumerable<User> users, UserSearcheable searchObj)
-  {
-    if (!string.IsNullOrEmpty(searchObj.Username))
-    {
-      users = users.Where(u => u.Username.ToLower() == searchObj.Username.ToLower());
-    }
-    if (!string.IsNullOrEmpty(searchObj.FirstName))
-    {
-      users = users.Where(u => u.FirstName.ToLower() == searchObj.FirstName.ToLower());
-    }
-    if (!string.IsNullOrEmpty(searchObj.LastName))
-    {
-      users = users.Where(u => u.LastName.ToLower() == searchObj.LastName.ToLower());
-    }
-    if (!string.IsNullOrEmpty(searchObj.GithubUrl))
-    {
-      users = users.Where(u => u.GithubUrl.Contains(searchObj.GithubUrl));
-    }
-    if (!string.IsNullOrEmpty(searchObj.LinkedInUrl))
-    {
-      users = users.Where(u => u.LinkedInUrl.Contains(searchObj.LinkedInUrl));
-    }
-
-    return users;
-  }
-
   public async Task<User> GetById(Guid id)
   {
     User foundUser = await _context.Users.FindAsync(id);
@@ -62,6 +39,8 @@ public class UserRepo : IService<User, UserSearcheable>
   {
     try
     {
+      user.Password = _passwordHasher.HashPassword(user, user.Password);
+      // -----
       _context.Users.Add(user);
       await _context.SaveChangesAsync();
     } catch (Exception)
@@ -96,3 +75,30 @@ public class UserRepo : IService<User, UserSearcheable>
 
 
 }
+
+
+//public IEnumerable<User> Filter(IEnumerable<User> users, UserSearcheable searchObj)
+//{
+//  if (!string.IsNullOrEmpty(searchObj.Username))
+//  {
+//    users = users.Where(u => u.Username.ToLower() == searchObj.Username.ToLower());
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.FirstName))
+//  {
+//    users = users.Where(u => u.FirstName.ToLower() == searchObj.FirstName.ToLower());
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.LastName))
+//  {
+//    users = users.Where(u => u.LastName.ToLower() == searchObj.LastName.ToLower());
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.GithubUrl))
+//  {
+//    users = users.Where(u => u.GithubUrl.Contains(searchObj.GithubUrl));
+//  }
+//  if (!string.IsNullOrEmpty(searchObj.LinkedInUrl))
+//  {
+//    users = users.Where(u => u.LinkedInUrl.Contains(searchObj.LinkedInUrl));
+//  }
+
+//  return users;
+//}

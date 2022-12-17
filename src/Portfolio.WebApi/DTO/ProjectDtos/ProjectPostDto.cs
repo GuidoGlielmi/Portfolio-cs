@@ -6,26 +6,26 @@ namespace Portfolio.WebApi.DTO.ProjectDtos;
 
 public class ProjectPostDto
 {
-  [Required]
-  [UrlRegexValidator(ErrorMessage = "Invalid deploy url")]
+  //[Required]
+  //[UrlRegexValidator(ErrorMessage = "Invalid deploy url")]
   public string DeployUrl { get; set; }
 
-  [Required]
-  [MinLength(20)]
+  //[Required]
+  //[MinLength(20)]
   public string Description { get; set; }
 
-  [Required]
-  [ImagePathValidator]
+  //[Required]
+  //[ImagePathValidator]
   public string ProjectImg { get; set; }
 
-  [Required]
-  [MinLength(5)]
+  //[Required]
+  //[MinLength(5)]
   public string Title { get; set; }
 
-  [MinLength(1, ErrorMessage = "Projects should have at least one URL")]
+  //[MinLength(1, ErrorMessage = "Projects should have at least one URL")]
   public List<ProjectUrlPostDto> Urls { get; set; } = new();
 
-  [MinLength(1, ErrorMessage = "Projects should have at least one technology")]
+  //[MinLength(1, ErrorMessage = "Projects should have at least one technology")]
   public List<Guid> TechsIds { get; set; } = new();
 
   public Guid UserId { get; set; }
