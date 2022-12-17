@@ -28,9 +28,7 @@ public class User :
 
   public string Username { get; set; }
 
-  public Role Role { get; set; } = new();
-
-  public Guid RoleId { get; set; } = new();
+  public Role Role { get; set; }
 
   public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

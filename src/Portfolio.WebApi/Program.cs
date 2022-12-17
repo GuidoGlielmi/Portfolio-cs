@@ -166,7 +166,7 @@ builder.Services.AddAutoMapper(assembly); // get the profiles in this assembly
 
 string portfolioDatabaseConnectionString = builder.Configuration["Database:ConnectionString"];
 
-builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseNpgsql(portfolioDatabaseConnectionString));
+builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseSqlServer(portfolioDatabaseConnectionString));
 
 builder.Services.Configure<ApiBehaviorOptions>(opt =>
 {
@@ -232,7 +232,7 @@ app.MapControllers(); // adds enpoints for our controller's actions,
 //However, apps can change the order in which UseRouting and UseEndpoints run by calling these methods explicitly.
 
 
-using (var context = new PortfolioContext(connString))
+using (var context = new PortfolioContext(portfolioDatabaseConnectionString))
 {
   context.Database.EnsureDeleted();
   context.Database.EnsureCreated();

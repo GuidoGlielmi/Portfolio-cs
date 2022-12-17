@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using QC = Microsoft.Data.SqlClient;
 
 namespace Portfolio.WebApi.Models;
 
@@ -28,7 +29,7 @@ public class PortfolioContext : DbContext
       //To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
       //optionsBuilder.UseNpgsql("Host=localhost;Database=portfoliocs;Username=postgres;Password=jorgedro");
       // Install-Package System.Configuration.ConfigurationManager
-      optionsBuilder.UseNpgsql(connString);
+      optionsBuilder.UseSqlServer(connString);
     }
   }
 
