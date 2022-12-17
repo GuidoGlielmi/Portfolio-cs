@@ -9,7 +9,7 @@ public class User :
   IMapFrom<UserPutDto>,
   IMapFrom<IEnumerable<UserPostDto>>,
   IMapFrom<IEnumerable<UserPutDto>>
-{
+{//
   public Guid Id { get; set; }
 
   public string AboutMe { get; set; }
