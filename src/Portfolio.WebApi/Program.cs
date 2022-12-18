@@ -30,7 +30,6 @@ using TokenOptions = Portfolio.WebApi.Security.Token.TokenOptions;
 // they are able to resolve the dependencies of classes at runtime
 // ASP.NET uses builder.SERVICES
 // Autofac can be used as well
-var asd = Assembly.GetExecutingAssembly().FullName;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // this already registers an array of logging providers:
 // - Console
@@ -102,6 +101,7 @@ builder.Services.AddPortfolioServices();
 //The various options interfaces exposed in .NET enables mapping configuration settings
 //to strongly typed classes that can be accessed across various service lifetimes.
 //basically it binds a class and its properties to an object found in a config json file
+var qwe = new ConfigurationSection()
 IConfiguration tokenOptionsConfig = builder.Configuration.GetSection(nameof(TokenOptions));
 builder.Services.ConfigureJwtAuthentication(tokenOptionsConfig);
 
