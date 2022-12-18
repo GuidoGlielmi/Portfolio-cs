@@ -30,7 +30,7 @@ using TokenOptions = Portfolio.WebApi.Security.Token.TokenOptions;
 // they are able to resolve the dependencies of classes at runtime
 // ASP.NET uses builder.SERVICES
 // Autofac can be used as well
-
+var asd = Assembly.GetExecutingAssembly().FullName;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // this already registers an array of logging providers:
 // - Console
