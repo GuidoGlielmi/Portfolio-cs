@@ -101,7 +101,6 @@ builder.Services.AddPortfolioServices();
 //The various options interfaces exposed in .NET enables mapping configuration settings
 //to strongly typed classes that can be accessed across various service lifetimes.
 //basically it binds a class and its properties to an object found in a config json file
-var qwe = new ConfigurationSection()
 IConfiguration tokenOptionsConfig = builder.Configuration.GetSection(nameof(TokenOptions));
 builder.Services.ConfigureJwtAuthentication(tokenOptionsConfig);
 
