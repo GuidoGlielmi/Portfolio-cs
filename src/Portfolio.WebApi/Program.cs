@@ -210,6 +210,8 @@ if (app.Environment.IsDevelopment()) // access ASPNETCORE_ENVIRONMENT env variab
   app.UseSwaggerUI();
 } else
 {
+
+  app.UseDeveloperExceptionPage();
   //app.UseExceptionHandler("/Error");// adds a middleware to the pipeline that catches errors
   app.UseHsts(); // HTTP Strict Transport Security.
   // Sends the homonym response header indicating browsers should use HTTPS, which relies on client implementation
