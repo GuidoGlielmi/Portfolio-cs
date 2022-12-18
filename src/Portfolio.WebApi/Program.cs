@@ -214,9 +214,9 @@ if (app.Environment.IsDevelopment()) // access ASPNETCORE_ENVIRONMENT env variab
   //app.UseExceptionHandler("/Error");// adds a middleware to the pipeline that catches errors
   app.UseHsts(); // HTTP Strict Transport Security.
   // Sends the homonym response header indicating browsers should use HTTPS, which relies on client implementation
+  app.UseHttpsRedirection(); // avoids responding to http requests (which may contain interceptable sensitive data)
 }
 
-app.UseHttpsRedirection(); // avoids responding to http requests (which may contain interceptable sensitive data)
 app.UseStatusCodePagesWithRedirects("/error");
 app.UseStaticFiles();
 
