@@ -82,7 +82,7 @@ builder.Services.AddCors(opt =>
   // a series of headers indicating the restrictions it has to be accessed (headers, origins and methods)
   opt.AddDefaultPolicy(policy =>
   {
-    policy.WithOrigins("http://localhost:3000");
+    policy.WithOrigins("http://localhost:3000", "https://portfolio-nextjs-b4wqg1lzy-guidoglielmi.vercel.app");
     policy.WithMethods("GET", "POST", "PUT", "DELETE", "PATCH");
     // policy.AllowAnyHeader();
     // policy.WithExposedHeaders(); // let client script access custom response header returned from cross-origin requests.
